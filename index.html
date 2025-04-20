@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教务系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .captcha-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .captcha-group input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .captcha-img {
+            width: 100px;
+            height: 40px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+            background: linear-gradient(45deg, #f3f3f3, #e0e0e0);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .login-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .login-footer a {
+            color: #3498db;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .social-login p {
+            color: #777;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        .wechat {
+            background-color: #09BB07;
+            color: white;
+        }
+        
+        .qq {
+            background-color: #12B7F5;
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .modal-content img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        
+        .close-btn {
+            padding: 8px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .close-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.3ZzePaCKVcek0yY-spE9SwHaHa?rs=1&pid=ImgDetMain" alt="校徽">
+            <h1>阜阳职业技术学院</h1>
+            <p>请使用您的账号（学号/工号）和密码登录系统验证</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">学号/工号</label>
+                <input type="text" id="username" placeholder="请输入学号或工号" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" placeholder="请输入密码" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="captcha">验证码</label>
+                <div class="captcha-group">
+                    <input type="text" id="captcha" placeholder="请输入验证码" required>
+                    <div class="captcha-img" id="captchaImg" onclick="generateCaptcha()"></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="login-btn">登录</button>
+        </form>
+        
+        <div class="login-footer">
+            <a id="forgotPassword" href="javascript:void(0)">忘记密码</a>
+            <a id="registerAccount" href="javascript:void(0)">注册账号</a>
+        </div>
+        
+        <div class="social-login">
+            <p>其他登录方式</p>
+            <div class="social-icons">
+                <div class="social-icon wechat" id="wechatLogin">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 3C5.462 3 3 5.462 3 8.5c0 1.61.756 3.044 1.923 4.024L3.938 15H8.5c3.038 0 5.5-2.462 5.5-5.5S11.538 3 8.5 3zm0 1c2.484 0 4.5 2.016 4.5 4.5S10.984 13 8.5 13H7v-.078l-.375-.281C5.66 11.674 5 10.171 5 8.5 5 6.016 7.016 4 8.5 4zm6.577.5C12.514 4.5 11 6.014 11 8v8.5c0 1.93 1.57 3.5 3.5 3.5H19v-4.078l.375-.281c1.965-1.474 2.625-2.977 2.625-4.641C22 8.014 20.486 6.5 19.077 6.5H16v-2h-.923zM16 7.5h3.077c1.38 0 2.423 1.043 2.423 2.5 0 1.329-.554 2.39-1.828 3.281l-.172.125V17.5h-3.5c-.827 0-1.5-.673-1.5-1.5V8c0-1.457 1.043-2.5 2.5-2.5z"/></svg>
+                </div>
+                <div class="social-icon qq" id="qqLogin">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184a13.5 13.5 0 0 1-1.727-.11c-1 .825-2.31 1.363-3.768 1.363-.245 0-.485-.017-.72-.05.315-.471.555-.995.704-1.56l.268-1.122c.093-.386.143-.8.143-1.231C6.5 14.5 3.464 12.454 2.097 9.5 2.433 7.093 6.061 3 12 3zm0 1C7.2 4 3.5 7.23 3.5 11.185c0 .36.038.715.112 1.057.5 2.093 2.7 3.758 5.488 3.758.46 0 .91-.052 1.342-.15l.39-.087.373.16c.98.42 2.114.637 3.295.637 4.8 0 8.5-3.23 8.5-7.185C20.5 7.23 16.8 4 12 4zm-5 4a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1zm6 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1z"/></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- 忘记密码模态框 -->
+    <div id="forgotModal" class="modal">
+        <div class="modal-content">
+            <h3>找回密码</h3>
+            <p>请扫描下方二维码联系管理员重置密码</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/reset-password" alt="找回密码二维码">
+            <button class="close-btn" onclick="closeModal('forgotModal')">关闭</button>
+        </div>
+    </div>
+    
+    <!-- 注册账号模态框 -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <h3>注册账号</h3>
+            <p>请扫描下方二维码进行账号注册</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/register" alt="注册账号二维码">
+            <button class="close-btn" onclick="closeModal('registerModal')">关闭</button>
+        </div>
+    </div>
+    
+    <!-- 微信登录模态框 -->
+    <div id="wechatModal" class="modal">
+        <div class="modal-content">
+            <h3>微信登录</h3>
+            <p>请使用微信扫描下方二维码</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=weixin://dl/login?appid=wx123456789&scope=snsapi_login" alt="微信登录二维码">
+            <button class="close-btn" onclick="closeModal('wechatModal')">关闭</button>
+        </div>
+    </div>
+    
+    <!-- QQ登录模态框 -->
+    <div id="qqModal" class="modal">
+        <div class="modal-content">
+            <h3>QQ登录</h3>
+            <p>请使用QQ扫描下方二维码</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/qq-login" alt="QQ登录二维码">
+            <button class="close-btn" onclick="closeModal('qqModal')">关闭</button>
+        </div>
+    </div>
+    <!-- 登录提示信息 -->
+    <div id="loginMessage" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f9f9f9; padding: 10px 20px; border-radius: 5px; color: black; font-size: 16px; z-index: 1001; display: none;"></div>
+    
+    <script>
+        // 生成验证码
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let captcha = '';
+            for (let i = 0; i < 4; i++) {
+                const randomIndex = Math.floor(Math.random() * chars.length);
+                captcha += chars[randomIndex];
+            }
+            document.getElementById('captchaImg').textContent = captcha;
+        }
+        
+        // 初始化验证码
+        window.onload = generateCaptcha;
+        
+        // 表单提交验证
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const inputCaptcha = document.getElementById('captcha').value;
+            const realCaptcha = document.getElementById('captchaImg').textContent;
+
+            if (inputCaptcha.toUpperCase() !== realCaptcha) {
+                alert('验证码错误，请重新输入！');
+                generateCaptcha();
+                return;
+            }
+
+            // 登录验证通过，显示提示并跳转
+            const loginMessage = document.getElementById('loginMessage');
+            loginMessage.textContent = '登录验证通过，正在加载';
+            loginMessage.style.display = 'block';
+            setTimeout(function() {
+                window.location.href = 'http://authserver.fyvtc.edu.cn/authserver/login?service=http%3A%2F%2Fehall.fyvtc.edu.cn%2Flogin';
+            }, 1000); // 1秒后跳转
+        });
+        
+        // 显示模态框函数
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        // 关闭模态框函数
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // 绑定事件
+        document.getElementById('forgotPassword').addEventListener('click', function() {
+            showModal('forgotModal');
+        });
+        
+        document.getElementById('registerAccount').addEventListener('click', function() {
+            showModal('registerModal');
+        });
+        
+        document.getElementById('wechatLogin').addEventListener('click', function() {
+            showModal('wechatModal');
+        });
+        
+        document.getElementById('qqLogin').addEventListener('click', function() {
+            showModal('qqModal');
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        });
+        
+        // 验证码图片点击刷新
+        document.getElementById('captchaImg').addEventListener('click', function() {
+            generateCaptcha();
+            // 重置30秒自动刷新计时器
+            clearInterval(captchaRefreshInterval);
+            captchaRefreshInterval = setInterval(generateCaptcha, 30000);
+        });
+        
+        // 30秒自动刷新验证码
+        let captchaRefreshInterval = setInterval(generateCaptcha, 30000);
+    </script>
+</body>
+</html>
