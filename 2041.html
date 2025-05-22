@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2041寝室 - 六人同行</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            margin-left: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            height: 80vh;
+            min-height: 500px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://imgur.la/images/2025/05/22/4b288e7b72554b7b23bd1b01f67d55b8.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* 关于寝室 */
+        .about {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .about-card {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .about-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* 成员介绍 */
+        .members {
+            padding: 5rem 0;
+            background-color: #f5f7fa;
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .member-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .member-img {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .member-card:hover .member-img img {
+            transform: scale(1.1);
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .member-info p.position {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .member-info p.bio {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--light);
+            color: var(--primary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* 相册 */
+        .gallery {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay h3 {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        /* 联系我们 */
+        .contact {
+            padding: 5rem 0;
+            background-color: #f5f7fa;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .contact-info p {
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+        
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-details i {
+            margin-right: 1rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <span>2041寝室</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#members">成员介绍</a></li>
+                    <li><a href="#gallery">寝室相册</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>2041寝室 · 六人同行</h1>
+            <p>来自五湖四海的我们，在这里相遇、相知、共同成长，创造属于我们的青春记忆</p>
+            <a href="#members" class="btn">认识我们</a>
+        </div>
+    </section>
+    
+    <!-- 关于寝室 -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>关于2041寝室</h2>
+                <p>我们是一个来自信息安全专业、不同性格的同学组成的温馨集体，在这里我们互相学习、共同进步</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>专业</h3>
+                    <p>计算机类|信息安全技术应用</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>荣誉成就</h3>
+                    <p>连续两年获得"五星级文明寝室"称号，寝室文化节一等奖</p>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>寝室文化</h3>
+                    <p>"一人有难，五人支援"是我们的座右铭，建立了深厚的友谊</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 成员介绍 -->
+    <section class="members" id="members">
+        <div class="container">
+            <div class="section-title">
+                <h2>寝室成员</h2>
+                <p>认识我们2041寝室的六位优秀成员，每个人都有独特的才华和个性</p>
+            </div>
+            
+            <div class="members-grid">
+                <!-- 成员1 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="武成龙">
+                    </div>
+                    <div class="member-info">
+                        <h3>武成龙</h3>
+                        <p class="position">寝室长 / 信息安全</p>
+                        <p class="bio">来自淮北</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-weixin"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 成员2 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://imgur.la/images/2025/05/22/_20250522124535.jpg" alt="杨效文">
+                    </div>
+                    <div class="member-info">
+                        <h3>杨效文</h3>
+                        <p class="position">无 / 信息安全</p>
+                        <p class="bio">来自阜阳</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-weibo"></i></a>
+                            <a href="#"><i class="fab fa-qq"></i></a>
+                            <a href="#"><i class="fab fa-bilibili"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 成员3 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://imgur.la/images/2025/05/22/_20250522124507.jpg" alt="夏淞">
+                    </div>
+                    <div class="member-info">
+                        <h3>夏淞</h3>
+                        <p class="position">无 / 信息安全</p>
+                        <p class="bio">来自合肥</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-weixin"></i></a>
+                            <a href="#"><i class="fab fa-douyin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 成员4 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://imgur.la/images/2025/05/22/_20250522124540.jpg" alt="张建国">
+                    </div>
+                    <div class="member-info">
+                        <h3>张建国</h3>
+                        <p class="position">无 / 信息安全</p>
+                        <p class="bio">来自阜阳</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-behance"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 成员5 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://imgur.la/images/2025/05/22/_20250522124526.jpg" alt="燕自力">
+                    </div>
+                    <div class="member-info">
+                        <h3>燕自力</h3>
+                        <p class="position">无 / 信息安全</p>
+                        <p class="bio">来自亳州</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-weixin"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-qq"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 成员6 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://imgur.la/images/2025/05/22/0476d4c1b2ce9094a42a855c1447ff96.jpg" alt="许建伟">
+                    </div>
+                    <div class="member-info">
+                        <h3>许建伟</h3>
+                        <p class="position">无 / 信息安全</p>
+                        <p class="bio">来自合肥</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-weixin"></i></a>
+                            <a href="#"><i class="fab fa-qq"></i></a>
+                            <a href="#"><i class="fab fa-zhihu"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 相册 -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>寝室相册</h2>
+                <p>记录我们在一起的每一个精彩瞬间</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24" alt="寝室合影">
+                    <div class="gallery-overlay">
+                        <h3>开学第一天</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f" alt="生日派对">
+                    <div class="gallery-overlay">
+                        <h3>李华生日派对</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1" alt="学习讨论">
+                    <div class="gallery-overlay">
+                        <h3>期末复习周</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70" alt="寝室装饰">
+                    <div class="gallery-overlay">
+                        <h3>寝室文化节</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267" alt="户外活动">
+                    <div class="gallery-overlay">
+                        <h3>春游踏青</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1523057530100-383d7fbc77a1" alt="比赛获奖">
+                    <div class="gallery-overlay">
+                        <h3>寝室设计大赛</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系我们 -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我们</h2>
+                <p>欢迎来访或留言，我们期待与您交流</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>2041寝室信息</h3>
+                    <p>我们位于校园双清苑南区，随时欢迎朋友们来访交流。</p>
+                    
+                    <div class="contact-details">
+                        <div>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>阜阳职业技术学院双清苑1#2041寝室</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-phone"></i>
+                            <span>寝室电话: 暂无</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-envelope"></i>
+                            <span>邮箱: 暂无</span>
+                        </div>
+                    </div>
+                    
+                    <h3>关注我们</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-bilibili"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">您的姓名</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">电子邮箱</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">发送留言</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>关于2041寝室</h3>
+                    <p>我们是一个充满活力与创意的六人寝室，在这里共同度过了美好的大学时光。</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#members">成员介绍</a></li>
+                        <li><a href="#gallery">寝室相册</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>寝室资源</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">学习资料</a></li>
+                        <li><a href="#">活动日历</a></li>
+                        <li><a href="#">寝室公约</a></li>
+                        <li><a href="#">值日表</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>联系方式</h3>
+                    <p><i class="fas fa-map-marker-alt"></i>阜阳职业技术学院双清苑2041</p>
+                    <p><i class="fas fa-phone"></i> 暂无</p>
+                    <p><i class="fas fa-envelope"></i> dorm2041@university.edu</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 2041寝室 版权所有 | 设计: 许建伟 | 开发: 无</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
