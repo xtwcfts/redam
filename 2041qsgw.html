@@ -348,6 +348,48 @@
             font-size: 1.2rem;
         }
         
+        /* 视频部分 */
+        .video-section {
+            margin-top: 4rem;
+        }
+        
+        .video-container {
+            max-width: 900px; /* 比图片区域更宽 */
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-caption {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
         /* 图片查看器 */
         .image-viewer {
             position: fixed;
@@ -613,6 +655,10 @@
             .gallery-item {
                 height: 200px;
             }
+            
+            .video-container {
+                max-width: 100%;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -736,7 +782,7 @@
                         <div class="social-links">
                             <a href="#"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
+                            <a href="#"><i class="fab fa-douyin"></i></a>
                         </div>
                     </div>
                 </div>
@@ -795,7 +841,7 @@
         </div>
     </section>
     
-    <!-- 相册 -->
+    <!-- 相册和视频 -->
     <section class="gallery" id="gallery">
         <div class="container">
             <div class="section-title">
@@ -823,6 +869,26 @@
                     <div class="gallery-overlay">
                         <h3>寝室设计</h3>
                     </div>
+                </div>
+            </div>
+            
+            <!-- 新增的视频部分 -->
+            <div class="video-section">
+                <div class="section-title">
+                    <h2>寝室视频记录</h2>
+                    <p>观看我们的精彩视频片段</p>
+                </div>
+                
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="http://m.0wd.cn/2eMWOr" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-caption">2041寝室日常记录</p>
                 </div>
             </div>
         </div>
