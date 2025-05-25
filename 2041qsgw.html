@@ -51,6 +51,28 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .school-logo {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 55px;
+            width: 55px;
+            z-index: 1001;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background-color: white;
+        }
+        
+        .school-logo img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
         }
         
         .logo {
@@ -58,6 +80,8 @@
             font-weight: 700;
             display: flex;
             align-items: center;
+            margin-left: 50px;
+            white-space: nowrap;
         }
         
         .logo span {
@@ -241,7 +265,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            pointer-events: none; /* 禁止图片本身的点击事件 */
+            pointer-events: none;
         }
         
         .member-card:hover .member-img img {
@@ -318,7 +342,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            pointer-events: none; /* 禁止图片本身的点击事件 */
+            pointer-events: none;
         }
         
         .gallery-item:hover img {
@@ -354,7 +378,7 @@
         }
         
         .video-container {
-            max-width: 900px; /* 比图片区域更宽 */
+            max-width: 900px;
             margin: 2rem auto;
             border-radius: 10px;
             overflow: hidden;
@@ -369,7 +393,7 @@
         
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 比例 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
         }
@@ -591,10 +615,18 @@
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
+                padding-left: 60px;
+            }
+            
+            .school-logo {
+                left: 10px;
+                height: 50px;
+                width: 50px;
             }
             
             .logo {
                 margin-bottom: 1rem;
+                margin-left: 0;
             }
             
             nav ul {
@@ -631,6 +663,12 @@
         }
         
         @media (max-width: 576px) {
+            .school-logo {
+                height: 45px;
+                width: 45px;
+                border-width: 1px;
+            }
+            
             .hero {
                 height: 60vh;
                 min-height: 400px;
@@ -666,6 +704,9 @@
 <body>
     <!-- 导航栏 -->
     <header>
+        <div class="school-logo">
+            <img src="http://jwwx.fyvtc.edu.cn/static/images/logo/fyvtc-logo.gif" alt="校徽">
+        </div>
         <div class="container header-container">
             <div class="logo">
                 <i class="fas fa-home"></i>
@@ -942,13 +983,13 @@
             
             viewedImage.src = imageSrc;
             viewer.classList.add('active');
-            document.body.style.overflow = 'hidden'; // 防止背景滚动
+            document.body.style.overflow = 'hidden';
         }
         
         function closeImageViewer() {
             const viewer = document.getElementById('imageViewer');
             viewer.classList.remove('active');
-            document.body.style.overflow = 'auto'; // 恢复背景滚动
+            document.body.style.overflow = 'auto';
         }
         
         // 点击查看器背景也可以关闭
