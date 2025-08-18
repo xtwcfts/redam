@@ -1,1183 +1,535 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>素质标杆-2041寝室</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教育考试中心 - 成绩查询系统</title>
     <style>
-        :root {
-            --primary: #3a86ff;
-            --secondary: #8338ec;
-            --accent: #ff006e;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-        }
-        
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f5f7fa;
-            color: var(--dark);
-            line-height: 1.6;
-            min-width: 320px;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100vw;
             overflow-x: hidden;
         }
         
         .container {
-            max-width: 1200px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
             margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
+            flex: 1;
         }
         
-        /* 导航栏 */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            min-width: 320px;
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            position: relative;
-        }
-        
-        .school-logo {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 55px;
-            width: 55px;
-            z-index: 1001;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            background-color: white;
-        }
-        
-        .school-logo img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            margin-left: 50px;
-            white-space: nowrap;
+            max-width: 200px;
+            margin-bottom: 10px;
         }
         
-        .logo span {
-            margin-left: 10px;
+        h1 {
+            color: #2c6ecb;
+            font-size: 24px;
+            margin-bottom: 15px;
         }
         
-        nav ul {
-            display: flex;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-        
-        nav li {
-            margin-left: 1.5rem;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 0;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        nav a:hover {
-            color: var(--accent);
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-        
-        nav a:hover::after {
-            width: 100%;
-        }
-        
-        /* 英雄区域 */
-        .hero {
-            height: 80vh;
-            min-height: 500px;
-            max-height: 800px;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://youke1.picui.cn/s1/2025/07/17/687881e1e1735.jpg') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: white;
-            min-width: 320px;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: white;
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        /* 关于寝室 */
-        .about {
-            padding: 5rem 0;
-            background-color: white;
-            min-width: 320px;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .section-title p {
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .about-card {
-            background-color: var(--light);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .about-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .about-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-        }
-        
-        .about-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        /* 成员介绍 */
-        .members {
-            padding: 5rem 0;
-            background-color: #f5f7fa;
-            min-width: 320px;
-        }
-        
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        
-        .member-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .member-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        
-        .member-img {
-            height: 300px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        
-        .member-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            pointer-events: none;
-        }
-        
-        .member-card:hover .member-img img {
-            transform: scale(1.1);
-        }
-        
-        .member-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        .member-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-        
-        .member-info p.position {
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .member-info p.bio {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--light);
-            color: var(--primary);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        /* 相册 */
-        .gallery {
-            padding: 5rem 0;
-            background-color: white;
-            min-width: 320px;
-        }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .gallery-item {
-            height: 250px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            pointer-events: none;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-        
-        .gallery-overlay h3 {
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        /* 视频部分 */
-        .video-section {
-            margin-top: 4rem;
-        }
-        
-        .video-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .video-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-        
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-        
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .video-caption {
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--gray);
-            font-size: 1.1rem;
-        }
-        
-        /* 图片查看器 */
-        .image-viewer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .image-viewer.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .image-viewer-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .image-viewer-content img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-        
-        .close-viewer {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .close-viewer:hover {
-            color: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        /* 联系方式弹窗 */
-        .contact-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .contact-popup.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .contact-popup-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .contact-popup-content img {
-            max-width: 100%;
-            max-height: 60vh;
-            object-fit: contain;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-        }
-        
-        .contact-popup-content h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .close-popup {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: var(--dark);
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .close-popup:hover {
-            color: var(--accent);
-            transform: rotate(90deg);
-        }
-        
-        /* 联系我们 */
-        .contact {
-            padding: 5rem 0;
-            background-color: #f5f7fa;
-            min-width: 320px;
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 3rem;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .contact-info p {
-            margin-bottom: 2rem;
-            color: var(--gray);
-        }
-        
-        .contact-details {
-            margin-bottom: 2rem;
-        }
-        
-        .contact-details div {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        
-        .contact-details div:hover {
-            color: var(--accent);
-        }
-        
-        .contact-details i {
-            margin-right: 1rem;
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-        
-        .contact-form .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 0.8rem;
+        .marquee-container {
+            background-color: #fff;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: inherit;
+            padding: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 4px;
         }
         
-        .contact-form textarea {
-            height: 150px;
-            resize: vertical;
+        .marquee {
+            color: #e74c3c;
+            font-weight: bold;
+            display: inline-block;
+            animation: marquee 15s linear infinite;
         }
         
-        /* 页脚 */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 0 1rem;
-            min-width: 320px;
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
         
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .query-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         
-        .footer-col h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
+        .form-group {
+            margin-bottom: 15px;
         }
         
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
         
-        .footer-col p {
-            margin-bottom: 1rem;
-            opacity: 0.8;
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
         }
         
-        .footer-links li {
-            margin-bottom: 0.8rem;
-            list-style: none;
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
         }
         
-        .footer-links a {
-            color: white;
-            opacity: 0.8;
-            text-decoration: none;
-            transition: all 0.3s ease;
+        .captcha-input {
+            flex: 1;
+            margin-right: 10px;
         }
         
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--accent);
-            padding-left: 5px;
-        }
-        
-        .copyright {
+        .captcha-box {
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            opacity: 0.7;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            user-select: none;
+            cursor: pointer;
         }
         
-        /* 响应式设计 */
-        @media (max-width: 1200px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #2c6ecb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
         
-        @media (max-width: 992px) {
-            .about-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .submit-btn:hover {
+            background-color: #1a56a7;
         }
         
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                padding-left: 60px;
-            }
-            
-            .school-logo {
-                left: 10px;
-                height: 50px;
-                width: 50px;
-            }
-            
-            .logo {
-                margin-bottom: 1rem;
-                margin-left: 0;
-                font-size: 1.5rem;
-            }
-            
-            nav ul {
-                justify-content: center;
-            }
-            
-            nav li {
-                margin: 0 0.5rem 0.5rem;
-            }
-            
-            .hero {
-                height: 70vh;
-                min-height: 400px;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .member-img {
-                height: 250px;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-popup-content {
-                padding: 1.5rem;
-            }
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            line-height: 1.6;
         }
         
-        @media (max-width: 576px) {
-            .school-logo {
-                height: 45px;
-                width: 45px;
-                border-width: 1px;
-            }
-            
-            .hero {
-                height: 60vh;
-                min-height: 400px;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .members-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .gallery-item {
-                height: 200px;
-            }
-            
-            .video-container {
-                max-width: 100%;
-            }
-
-            .contact-popup-content {
-                padding: 1rem;
-            }
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
         }
-
-        @media (max-width: 375px) {
-            .logo {
-                font-size: 1.3rem;
+        
+        /* 成绩展示页面样式 */
+        .result-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .student-info {
+            margin-bottom: 20px;
+        }
+        
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .score-table th, .score-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .score-table th {
+            background-color: #f5f5f5;
+        }
+        
+        .excellent-notice {
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
             }
             
-            nav a {
-                font-size: 0.9rem;
-            }
-            
-            .hero h1 {
-                font-size: 1.6rem;
-            }
-            
-            .hero p {
-                font-size: 0.9rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.5rem;
-            }
-            
-            .btn {
-                padding: 0.6rem 1.4rem;
-                font-size: 0.9rem;
-            }
-            
-            .about-card, .member-info {
-                padding: 1.5rem;
-            }
-
-            .contact-popup-content h3 {
-                font-size: 1.2rem;
+            .query-form, .result-container {
+                padding: 15px;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- 导航栏 -->
-    <header>
-        <div class="school-logo">
-            <img src="http://jwwx.fyvtc.edu.cn/static/images/logo/fyvtc-logo.gif" alt="校徽">
+    <div class="container">
+        <div class="header">
+            <img src="https://cx.ahzsks.cn/include/20090609.jpg" alt="教育考试中心" class="logo">
+            <h1>成绩查询</h1>
         </div>
-        <div class="container header-container">
-            <div class="logo">
-                <i class="fas fa-home"></i>
-                <span>素质标杆-2041寝室</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">首页</a></li>
-                    <li><a href="#about">关于我们</a></li>
-                    <li><a href="#members">成员介绍</a></li>
-                    <li><a href="#gallery">寝室精彩文化</a></li>
-                </ul>
-            </nav>
+        
+        <div class="marquee-container">
+            <div class="marquee">你现在正在访问成绩查询网页，当前访问人数较多，请您耐心等待...</div>
         </div>
-    </header>
-    
-    <!-- 英雄区域 -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>2041 素质寝室</h1>
-            <p>来自五湖四海的我们，在这里相遇、相知、共同成长，创造属于我们的青春记忆</p>
-            <a href="#members" class="btn">认识我们</a>
+        
+        <div class="query-form" id="queryForm">
+            <form id="scoreQueryForm">
+                <div class="form-group">
+                    <label for="exam-number">准考证号：</label>
+                    <input type="text" id="exam-number" class="form-control" placeholder="">
+                    <div class="error-message" id="exam-number-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id-number">身份证号：</label>
+                    <input type="text" id="id-number" class="form-control" placeholder="">
+                    <div class="error-message" id="id-number-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">姓名：</label>
+                    <input type="text" id="name" class="form-control" placeholder="">
+                    <div class="error-message" id="name-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="captcha">验证码：</label>
+                    <div class="captcha-container">
+                        <input type="text" id="captcha" class="form-control captcha-input" placeholder="">
+                        <div class="captcha-box" id="captcha-display"></div>
+                    </div>
+                    <div class="error-message" id="captcha-error"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn">查询</button>
+            </form>
         </div>
-    </section>
-    
-    <!-- 关于寝室 -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>关于2041寝室</h2>
-                <p>我们是一个来自信息安全专业、不同性格的同学组成的温馨集体，在这里我们互相学习、共同进步</p>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="student-info">
+                <p><strong>姓名：</strong><span id="result-name"></span></p>
+                <p><strong>准考证号：</strong><span id="result-exam-number"></span></p>
+                <p><strong>身份证号：</strong><span id="result-id-number"></span></p>
             </div>
             
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="about-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3>专业</h3>
-                    <p>计算机类|信息安全技术应用</p>
-                </div>
-                
-                <div class="about-card">
-                    <div class="about-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3>荣誉成就</h3>
-                    <p>寝室徽章设计三等奖</p>
-                </div>
-                
-                <div class="about-card">
-                    <div class="about-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3>寝室文化</h3>
-                    <p>"一人有难，五人支援"是我们的座右铭，建立了深厚的友谊</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 成员介绍 -->
-    <section class="members" id="members">
-        <div class="container">
-            <div class="section-title">
-                <h2>寝室成员</h2>
-                <p>认识我们2041寝室的六位优秀少爷，每个人都有独特的才华和个性</p>
+            <div class="excellent-notice" id="excellentNotice">
+                恭喜你已被屏蔽，成绩和排名暂缓公布
             </div>
             
-            <div class="members-grid">
-                <!-- 成员1 -->
-                <div class="member-card">
-                    <div class="member-img" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/6878845ebde9a.jpg')">
-                        <img src="https://youke1.picui.cn/s1/2025/07/17/6878845ebde9a.jpg" alt="武少">
-                    </div>
-                    <div class="member-info">
-                        <h3>武少</h3>
-                        <p class="position">寝室长 / 信息安全</p>
-                        <p class="bio">来自安徽</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 成员2 -->
-                <div class="member-card">
-                    <div class="member-img" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/68788480898d0.jpg')">
-                        <img src="https://youke1.picui.cn/s1/2025/07/17/68788480898d0.jpg" alt="杨少">
-                    </div>
-                    <div class="member-info">
-                        <h3>杨少</h3>
-                        <p class="position">无 / 信息安全</p>
-                        <p class="bio">来自安徽</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 成员3 -->
-                <div class="member-card">
-                    <div class="member-img" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/687884a865c23.jpg')">
-                        <img src="https://youke1.picui.cn/s1/2025/07/17/687884a865c23.jpg" alt="夏少">
-                    </div>
-                    <div class="member-info">
-                        <h3>夏少</h3>
-                        <p class="position">无 / 信息安全</p>
-                        <p class="bio">来自安徽</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 成员4 -->
-                <div class="member-card">
-                    <div class="member-img" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/687883e1b9457.jpg')">
-                        <img src="https://youke1.picui.cn/s1/2025/07/17/687883e1b9457.jpg" alt="张少">
-                    </div>
-                    <div class="member-info">
-                        <h3>张少</h3>
-                        <p class="position">无 / 信息安全</p>
-                        <p class="bio">来自安徽</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 成员5 -->
-                <div class="member-card">
-                    <div class="member-img" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/6878827ea6034.jpg')">
-                        <img src="https://youke1.picui.cn/s1/2025/07/17/6878827ea6034.jpg" alt="燕少">
-                    </div>
-                    <div class="member-info">
-                        <h3>燕少</h3>
-                        <p class="position">无 / 信息安全</p>
-                        <p class="bio">来自安徽</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 成员6 -->
-                <div class="member-card">
-                    <div class="member-img" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/687884c1a87f0.jpg')">
-                        <img src="https://youke1.picui.cn/s1/2025/07/17/687884c1a87f0.jpg" alt="许少">
-                    </div>
-                    <div class="member-info">
-                        <h3>许少</h3>
-                        <p class="position">无 / 信息安全</p>
-                        <p class="bio">来自太平洋</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-weixin"></i></a>
-                            <a href="#"><i class="fab fa-qq"></i></a>
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <table class="score-table" id="scoreTable">
+                <thead>
+                    <tr>
+                        <th>科目</th>
+                        <th>主观题</th>
+                        <th>成绩</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>语文</td>
+                        <td id="chinese-subjective"></td>
+                        <td id="chinese-score"></td>
+                    </tr>
+                    <tr>
+                        <td>数学</td>
+                        <td id="math-subjective"></td>
+                        <td id="math-score"></td>
+                    </tr>
+                    <tr>
+                        <td>英语</td>
+                        <td id="english-subjective"></td>
+                        <td id="english-score"></td>
+                    </tr>
+                    <tr>
+                        <td id="science-subject">物理/历史</td>
+                        <td id="science-subjective"></td>
+                        <td id="science-score"></td>
+                    </tr>
+                    <tr>
+                        <td id="social-subject">政治/地理</td>
+                        <td id="social-subjective"></td>
+                        <td id="social-score"></td>
+                    </tr>
+                    <tr>
+                        <td id="bio-subject">生物/化学</td>
+                        <td id="bio-subjective"></td>
+                        <td id="bio-score"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>总分</strong></td>
+                        <td id="total-score"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </section>
-    
-    <!-- 相册和视频 -->
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <div class="section-title">
-                <h2>寝室精彩文化</h2>
-                <p>记录我们在一起的每一个精彩瞬间</p>
-            </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/6878839e7ade8.jpg')">
-                    <img src="https://youke1.picui.cn/s1/2025/07/17/6878839e7ade8.jpg" alt="校园风采">
-                    <div class="gallery-overlay">
-                        <h3>校园美景</h3>
-                    </div>
-                </div>
-                
-                 <div class="gallery-item" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/6878831c8183a.jpg')">
-                    <img src="https://youke1.picui.cn/s1/2025/07/17/6878831c8183a.jpg" alt="寝室徽章">
-                    <div class="gallery-overlay">
-                        <h3>寝室徽章</h3>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/687882e4c2551.jpg')">
-                    <img src="https://youke1.picui.cn/s1/2025/07/17/687882e4c2551.jpg" alt="比赛获奖">
-                    <div class="gallery-overlay">
-                        <h3>寝室设计</h3>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/6878851391fbd.jpg')">
-                    <img src="https://youke1.picui.cn/s1/2025/07/17/6878851391fbd.jpg" alt="作品设计">
-                    <div class="gallery-overlay">
-                        <h3>海报设计</h3>
-                    </div>
-                </div>
-
-               <div class="gallery-item" onclick="openImageViewer('https://youke1.picui.cn/s1/2025/07/17/6878852bc8d4f.jpg')">
-                    <img src="https://youke1.picui.cn/s1/2025/07/17/6878852bc8d4f.jpg" alt="冬日雪景">
-                    <div class="gallery-overlay">
-                        <h3>校园雪景</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 新增的视频部分 -->
-            <div class="video-section">
-                <div class="section-title">
-                    <h2>寝室视频记录</h2>
-                    <p>观看我们的精彩视频片段</p>
-                </div>
-                
-                <div class="video-container">
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="http://m.0wd.cn/2eMWOr" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <p class="video-caption">2041寝室日常记录</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 图片查看器 -->
-    <div class="image-viewer" id="imageViewer">
-        <span class="close-viewer" onclick="closeImageViewer()">&times;</span>
-        <div class="image-viewer-content">
-            <img id="viewedImage" src="" alt="">
+        
+        <div class="footer">
+            <div>念安 版权所有</div>
+            <div>地址：安徽省合肥市肥东县教育考试中心</div>
+            <div>登录 IP：<span id="ip-address">正在获取...</span></div>
+            <div id="current-time"></div>
         </div>
     </div>
-
-    <!-- 联系方式弹窗 -->
-    <div class="contact-popup" id="contactPopup">
-        <div class="contact-popup-content">
-            <span class="close-popup" onclick="closeContactPopup()">&times;</span>
-            <img src="https://youke1.picui.cn/s1/2025/07/17/6878856115678.jpg" alt="联系方式">
-            <h3>2041寝室联系方式</h3>
-            <p>请扫描二维码查看</p>
-        </div>
-    </div>
-          
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>关于2041寝室</h3>
-                    <p>我们是一个充满活力与创意的六人寝室，在这里共同度过了美好的大学时光。</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>快速链接</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#about">关于我们</a></li>
-                        <li><a href="#members">成员介绍</a></li>
-                        <li><a href="#gallery">寝室精彩文化</a></li>
-                    </ul>
-                </div>
-         
-                <div class="footer-col">
-                    <h3>联系方式</h3>
-                    <div onclick="openContactPopup()"><i class="fas fa-phone"></i> 点击查看</div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2025 2041寝室 版权所有 | 设计: 2041 | 开发: 2041</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
-        // 图片查看器功能
-        function openImageViewer(imageSrc) {
-            const viewer = document.getElementById('imageViewer');
-            const viewedImage = document.getElementById('viewedImage');
+        // 生成随机验证码
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let captcha = '';
+            for (let i = 0; i < 4; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return captcha;
+        }
+        
+        // 显示验证码
+        let currentCaptcha = generateCaptcha();
+        document.getElementById('captcha-display').textContent = currentCaptcha;
+        
+        // 点击验证码刷新
+        document.getElementById('captcha-display').addEventListener('click', function() {
+            currentCaptcha = generateCaptcha();
+            this.textContent = currentCaptcha;
+        });
+        
+        // 生成随机成绩数据
+        function generateScores(examNumber) {
+            // 确保每个准考证号对应固定的成绩
+            const seed = parseInt(examNumber);
+            const random = (min, max) => Math.floor(min + (seed % (max - min + 1)));
             
-            viewedImage.src = imageSrc;
-            viewer.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            // 主科成绩 (150分满分)
+            const chineseScore = random(90, 150);
+            const mathScore = random(80, 150);
+            const englishScore = random(85, 150);
+            
+            // 主观题成绩 (0-30分)
+            const chineseSubjective = random(0, 30);
+            const mathSubjective = random(0, 30);
+            const englishSubjective = random(0, 30);
+            
+            // 理科或文科选择
+            const isScience = seed % 2 === 0;
+            
+            // 理科或文科成绩 (100分满分)
+            const scienceScore = isScience ? random(60, 100) : random(65, 100);
+            const socialScore = isScience ? random(70, 100) : random(60, 100);
+            const bioScore = isScience ? random(50, 100) : random(55, 100);
+            
+            // 主观题成绩 (0-20分)
+            const scienceSubjective = random(0, 20);
+            const socialSubjective = random(0, 20);
+            const bioSubjective = random(0, 20);
+            
+            return {
+                chinese: { score: chineseScore, subjective: chineseSubjective },
+                math: { score: mathScore, subjective: mathSubjective },
+                english: { score: englishScore, subjective: englishSubjective },
+                science: { 
+                    subject: isScience ? "物理" : "历史",
+                    score: scienceScore, 
+                    subjective: scienceSubjective 
+                },
+                social: { 
+                    subject: isScience ? "化学" : "政治",
+                    score: socialScore, 
+                    subjective: socialSubjective 
+                },
+                bio: { 
+                    subject: isScience ? "生物" : "地理",
+                    score: bioScore, 
+                    subjective: bioSubjective 
+                },
+                total: chineseScore + mathScore + englishScore + scienceScore + socialScore + bioScore
+            };
         }
         
-        function closeImageViewer() {
-            const viewer = document.getElementById('imageViewer');
-            viewer.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // 点击查看器背景也可以关闭
-        document.getElementById('imageViewer').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeImageViewer();
-            }
-        });
-
-        // 联系方式弹窗功能
-        function openContactPopup() {
-            const popup = document.getElementById('contactPopup');
-            popup.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeContactPopup() {
-            const popup = document.getElementById('contactPopup');
-            popup.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // 点击弹窗背景也可以关闭
-        document.getElementById('contactPopup').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeContactPopup();
-            }
-        });
-        
-        // 禁止右键菜单和图片拖拽
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-            }
-        });
-        
-        document.addEventListener('dragstart', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-            }
-        });
-
-        // 防止页面缩放
-        document.addEventListener('gesturestart', function (e) {
+        // 表单验证
+        document.getElementById('scoreQueryForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            let isValid = true;
+            
+            // 验证准考证号
+            const examNumber = document.getElementById('exam-number').value.trim();
+            if (!examNumber) {
+                document.getElementById('exam-number-error').textContent = '请输入准考证号';
+                document.getElementById('exam-number-error').style.display = 'block';
+                isValid = false;
+            } else if (!/^\d+$/.test(examNumber) || parseInt(examNumber) < 1 || parseInt(examNumber) > 1000) {
+                document.getElementById('exam-number-error').textContent = '请输入1-1000之间的准考证号';
+                document.getElementById('exam-number-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('exam-number-error').style.display = 'none';
+            }
+            
+            // 验证身份证号
+            const idNumber = document.getElementById('id-number').value.trim();
+            if (!idNumber) {
+                document.getElementById('id-number-error').textContent = '请输入身份证号';
+                document.getElementById('id-number-error').style.display = 'block';
+                isValid = false;
+            } else if (!/^\d+$/.test(idNumber) || parseInt(idNumber) < 340001 || parseInt(idNumber) > 341000) {
+                document.getElementById('id-number-error').textContent = '请输入340001-341000之间的身份证号';
+                document.getElementById('id-number-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('id-number-error').style.display = 'none';
+            }
+            
+            // 验证姓名
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                document.getElementById('name-error').textContent = '请输入姓名';
+                document.getElementById('name-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('name-error').style.display = 'none';
+            }
+            
+            // 验证验证码
+            const captcha = document.getElementById('captcha').value.trim();
+            if (!captcha) {
+                document.getElementById('captcha-error').textContent = '请输入验证码';
+                document.getElementById('captcha-error').style.display = 'block';
+                isValid = false;
+            } else if (captcha.toLowerCase() !== currentCaptcha.toLowerCase()) {
+                document.getElementById('captcha-error').textContent = '验证码不正确';
+                document.getElementById('captcha-error').style.display = 'block';
+                isValid = false;
+                // 刷新验证码
+                currentCaptcha = generateCaptcha();
+                document.getElementById('captcha-display').textContent = currentCaptcha;
+                document.getElementById('captcha').value = '';
+            } else {
+                document.getElementById('captcha-error').style.display = 'none';
+            }
+            
+            if (isValid) {
+                // 显示查询结果
+                showResults(examNumber, idNumber, name);
+            }
         });
+        
+        // 显示查询结果
+        function showResults(examNumber, idNumber, name) {
+            // 生成成绩数据
+            const scores = generateScores(examNumber);
+            
+            // 填写学生信息
+            document.getElementById('result-name').textContent = name;
+            document.getElementById('result-exam-number').textContent = examNumber;
+            document.getElementById('result-id-number').textContent = idNumber;
+            
+            // 填写成绩
+            document.getElementById('chinese-score').textContent = scores.chinese.score;
+            document.getElementById('chinese-subjective').textContent = scores.chinese.subjective;
+            
+            document.getElementById('math-score').textContent = scores.math.score;
+            document.getElementById('math-subjective').textContent = scores.math.subjective;
+            
+            document.getElementById('english-score').textContent = scores.english.score;
+            document.getElementById('english-subjective').textContent = scores.english.subjective;
+            
+            document.getElementById('science-subject').textContent = scores.science.subject;
+            document.getElementById('science-score').textContent = scores.science.score;
+            document.getElementById('science-subjective').textContent = scores.science.subjective;
+            
+            document.getElementById('social-subject').textContent = scores.social.subject;
+            document.getElementById('social-score').textContent = scores.social.score;
+            document.getElementById('social-subjective').textContent = scores.social.subjective;
+            
+            document.getElementById('bio-subject').textContent = scores.bio.subject;
+            document.getElementById('bio-score').textContent = scores.bio.score;
+            document.getElementById('bio-subjective').textContent = scores.bio.subjective;
+            
+            document.getElementById('total-score').textContent = scores.total;
+            
+            // 检查是否高分屏蔽
+            if (scores.total > 700) {
+                document.getElementById('excellent-notice').style.display = 'block';
+                document.getElementById('scoreTable').style.display = 'none';
+            } else {
+                document.getElementById('excellent-notice').style.display = 'none';
+                document.getElementById('scoreTable').style.display = 'table';
+            }
+            
+            // 切换显示
+            document.getElementById('queryForm').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+        
+        // 获取IP地址
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').textContent = data.ip;
+            })
+            .catch(() => {
+                document.getElementById('ip-address').textContent = '获取失败';
+            });
+        
+        // 更新时间
+        function updateTime() {
+            const now = new Date();
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const weekday = weekdays[now.getDay()];
+            
+            document.getElementById('current-time').textContent = 
+                `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒 星期${weekday}`;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
     </script>
 </body>
 </html>
